@@ -1,3 +1,9 @@
+import React from 'react'
+import { Component } from 'react'
+import ReactDOM from 'react-dom'
+import { combineReducers } from 'redux'
+import { createStore} from 'redux'
+
 const todo = (state, action) => {
   switch(action.type) {
     case 'ADD_TODO' : 
@@ -8,7 +14,7 @@ const todo = (state, action) => {
         };
 
     case 'TOGGLE_TODO':
-        if (state.id != action.id) {
+        if (state.id !== action.id) {
           return state;
         }
 
@@ -49,58 +55,49 @@ const visibilityFilter = (
   }
 };
 
-const { combineReducers } = Redux;
-
 const todoApp = combineReducers({
   todos,
   visibilityFilter
 });
 
-const { createStore} = Redux;
+
 const store = createStore(todoApp);
 
-console.log('Initial state: ');
-console.log(store.getState());
-console.log('---------------');
 
-console.log('Dispatching ADD_TODO');
-store.dispatch({
-  type : 'ADD_TODO',
-  id : 0,
-  text : 'Learn Redux'
-});
+let nextTodoId = 0;
+class TodoApp extends Component {
+  render() {
+    return (
+      <div>
+        <button onClick={() => {
+          store.dispatch({
+            type : 'ADD_TODO',
+            text : 'Test',
+            id : nextTodoId++
+          });
+        }}>
+          Add Todo
+        </button>
+        <ul>
+          {this.props.todos.map(todo =>
+            <li key={todo.id}>
+              {todo.text}
+            </li>
+          )}
+        </ul>
+      </div>
+    );
+  }
+}
 
-console.log('Current state: ');
-console.log(store.getState());
-console.log('---------------');
+const render = () => {
+  ReactDOM.render(
+    <TodoApp 
+      todos = {store.getState().todos}
+    />,
+    document.getElementById('root')
+  );
+};
 
-console.log('Dispatching ADD_TODO');
-store.dispatch({
-  type : 'ADD_TODO',
-  id : 1,
-  text : 'Go shopping'
-});
-
-console.log('Current state: ');
-console.log(store.getState());
-console.log('---------------');
-
-console.log('Dispatching TOGGLE_TODO');
-store.dispatch({
-  type : 'TOGGLE_TODO',
-  id : 0
-});
-
-console.log('Current state: ');
-console.log(store.getState());
-console.log('---------------');
-
-console.log('Dispatching SET_VISIBILITY_FILTER');
-store.dispatch({
-  type : 'SET_VISIBILITY_FILTER',
-  filter : 'SHOW_COMPLETED'
-});
-
-console.log('Current state: ');
-console.log(store.getState());
-console.log('---------------');
+store.subscribe(render);
+render();
