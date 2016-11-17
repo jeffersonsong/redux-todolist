@@ -6,6 +6,15 @@ import { createStore} from 'redux'
 import { Provider } from 'react-redux'
 import { connect } from 'react-redux'
 
+let nextTodoId = 0;
+const addTodo = (text) => {
+  return {
+    type : 'ADD_TODO',
+    id : nextTodoId++,
+    text
+  };
+};
+
 const todo = (state, action) => {
   switch(action.type) {
     case 'ADD_TODO' : 
@@ -170,7 +179,6 @@ const TodoList = ({
   </ul>
 );
 
-let nextTodoId = 0;
 let AddTodo = ({ dispatch }) => {
   let input;
   return (
@@ -179,11 +187,7 @@ let AddTodo = ({ dispatch }) => {
         input = node;
       }} />
       <button onClick={() => {
-        dispatch({
-          type : 'ADD_TODO',
-          id : nextTodoId++,
-          text : input.value
-        });
+        dispatch(addTodo(input.value));
         input.value = '';
       }}>
         Add Todo
