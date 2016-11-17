@@ -15,17 +15,17 @@ const addTodo = (text) => {
   };
 };
 
-const setVisibilityFilter = (filter) => {
-  return {
-    type : 'SET_VISIBILITY_FILTER',
-    filter
-  };
-};
-
 const toggleTodo = (id) => {
   return {
     type : 'TOGGLE_TODO',
     id
+  };
+};
+
+const setVisibilityFilter = (filter) => {
+  return {
+    type : 'SET_VISIBILITY_FILTER',
+    filter
   };
 };
 
