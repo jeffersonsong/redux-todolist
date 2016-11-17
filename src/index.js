@@ -232,7 +232,6 @@ const mapStateToTodoListProps = (
     )
   };
 };
-
 const mapDispatchToTodoListProps = (
   dispatch
 ) => {
@@ -245,7 +244,6 @@ const mapDispatchToTodoListProps = (
     }
   };
 };
-
 const VisibleTodoList = connect(
   mapStateToTodoListProps,
   mapDispatchToTodoListProps
