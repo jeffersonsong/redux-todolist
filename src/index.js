@@ -198,6 +198,9 @@ const AddTodo = (props, {store}) => {
     </div>
   );
 };
+AddTodo.contextTypes = {
+  store : React.PropTypes.object
+};
 
 const getVisibleTodos = (
   todos,
@@ -215,9 +218,6 @@ const getVisibleTodos = (
         t => !t.completed
       );
   }
-};
-AddTodo.contextTypes = {
-  store : React.PropTypes.object
 };
 
 class VisibleTodoList extends Component {
