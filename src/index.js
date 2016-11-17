@@ -200,14 +200,7 @@ let AddTodo = ({ dispatch }) => {
     </div>
   );
 };
-AddTodo = connect(
-  state => {
-    return {};
-  },
-  dispatch => {
-    return { dispatch };
-  }
-)(AddTodo);
+AddTodo = connect()(AddTodo);
 
 const getVisibleTodos = (
   todos,
